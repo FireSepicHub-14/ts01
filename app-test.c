@@ -5,6 +5,20 @@
 /* ---- 前提 ---- */
 // 1. モーターの向き的に、負の値で前進、正の値で後退する
 
+/* ---- Work Flow ---- */
+// 1. 黒線トレース
+// 2. 黄線トレース
+// 3. 緑線まで直進
+// 4. 緑線トレース
+// 5. 黄線まで直進
+// 6. 黄線トレース
+// 7. 赤線まで黒線トレース
+// 8. 赤線トレース
+// 9. 緑線まで直進
+// 10. 緑線トレース
+// 11. 赤線まで直進
+// 12. 黒線まで赤線トレース
+// 13. 黒線トレース
 
 /* ---- 制御関数 ---- */
 void R_MOTOR(int power) {   // 右モーターの関数
@@ -94,12 +108,12 @@ void main_task(intptr_t unused){
     // スピーカー音量
     ev3_speaker_set_volume(10);
 
-    /* ---------------- スタート ---------------- */
+    /* ---------------- 0. スタート ---------------- */
     // スタートし、ジャイロリセット
     GyroReset();
 
 
-    /* ---------------- 黒線トレース ---------------- */
+    /* ---------------- 1. 黒線トレース ---------------- */
     //壁タッチまで黒線をトレース
     while(Touch() == 0) {
         // 左センサーが黒検知したら左Speed=(-20)
@@ -124,7 +138,7 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -83) {
-        TURN_MOTOR(30, -30);
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -134,7 +148,7 @@ void main_task(intptr_t unused){
     GyroReset();
 
 
-    /* ---------------- 黄線トレース ---------------- */
+    /* ---------------- 2. 黄線トレース ---------------- */
     // 壁タッチまで黄線をトレース
     while(Touch() == 0) {
         // 左センサーが黄検知したら左Speed=(-20)
@@ -159,7 +173,7 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -169,18 +183,18 @@ void main_task(intptr_t unused){
     GoToWall();
 
 
-    /* ---------------- 緑線まで直進 ---------------- */
+    /* ---------------- 3. 緑線まで直進 ---------------- */
     // 緑線を検知するまで直進
     while(GetColor(EV3_PORT_1) != 3 && GetColor(EV3_PORT_2) != 3) {
         DSU_MOTOR(-30);
         tslp_tsk(10);
     }
     // 少し下がる
-    DS_MOTOR(50, 30);
+    DS_MOTOR(50, 10);
 
     // 左に90度回転
     while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -190,7 +204,7 @@ void main_task(intptr_t unused){
     GoToWall();
 
 
-    /* ---------------- 緑線トレース ---------------- */
+    /* ---------------- 4. 緑線トレース ---------------- */
     // 壁タッチまで緑線をトレース
     while(Touch() == 0) {
         // 左センサーが緑検知したら左Speed=(-20)
@@ -211,11 +225,11 @@ void main_task(intptr_t unused){
         }
     }
     // 壁にタッチしたら少し下がる
-    DS_MOTOR(30, 300);
+    DS_MOTOR(30, 500);
 
     // 左に90度回転
-    while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+    while(GyroAngle() > -87) {
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -225,7 +239,7 @@ void main_task(intptr_t unused){
     GyroReset();
 
 
-    /* ---------------- 黄線まで直進 ---------------- */
+    /* ---------------- 5. 黄線まで直進 ---------------- */
     // 黄線の壁まで直進
     while(Touch() == 0) {
         DSU_MOTOR(-30);
@@ -235,8 +249,8 @@ void main_task(intptr_t unused){
     DS_MOTOR(30, 200);
 
     // 左に90度回転
-    while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+    while(GyroAngle() > -83) {
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -246,7 +260,7 @@ void main_task(intptr_t unused){
     GoToWall();
 
 
-    /* ---------------- 黒線まで黄線トレース ---------------- */
+    /* ---------------- 6. 黒線まで黄線トレース ---------------- */
     // 黒線を検知するまで黄線をトレース
     while(GetColor(EV3_PORT_1) != 1 && GetColor(EV3_PORT_2) != 1) {
         // 左センサーが黄検知したら左Speed=(-20)
@@ -267,11 +281,11 @@ void main_task(intptr_t unused){
         }
     }
     //少し下がる
-    DS_MOTOR(50, 30);
+    DS_MOTOR(50, 30);   // いらないかも？
 
     // 左に90度回転
-    while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+    while(GyroAngle() > -83) {
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -281,7 +295,7 @@ void main_task(intptr_t unused){
     GoToWall();
 
 
-    /* -------- 赤線まで黒線トレース -------- */
+    /* ---------------- 7. 赤線まで黒線トレース ---------------- */
     // 赤線を検知するまで黒線をトレース
     while(GetColor(EV3_PORT_1) != 5 && GetColor(EV3_PORT_2) != 5) {
         // 左センサーが黒検知したら左Speed=(-20)
@@ -302,18 +316,18 @@ void main_task(intptr_t unused){
         }
     }
     //少し下がる
-    DS_MOTOR(50, 30);
+    DS_MOTOR(50, 30);   // いらないかも？
 
     // 左に90度回転
-    while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+    while(GyroAngle() > -83) {
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
     STOP_MOTOR();
 
 
-    /* ---------------- 赤線トレース ---------------- */
+    /* ---------------- 8. 赤線トレース ---------------- */
     // 壁タッチまで赤線をトレース
     while(Touch() == 0) {
         // 左センサーが赤検知したら左Speed=(-20)
@@ -338,7 +352,7 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -348,18 +362,18 @@ void main_task(intptr_t unused){
     GoToWall();
     
     
-    /* ---------------- 緑線まで直進 ---------------- */
+    /* ---------------- 9. 緑線まで直進 ---------------- */
     // 緑線を検知するまで直進
     while(GetColor(EV3_PORT_1) != 3 && GetColor(EV3_PORT_2) != 3) {
         DSU_MOTOR(-30);
         tslp_tsk(10);
     }
     // 少し下がる
-    DS_MOTOR(50, 30);
+    DS_MOTOR(50, 30);   // いらないかも？
 
     // 左に90度回転
     while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -369,7 +383,7 @@ void main_task(intptr_t unused){
     GoToWall();
 
 
-    /* ---------------- 緑線トレース ---------------- */
+    /* ---------------- 10. 緑線トレース ---------------- */
     // 壁タッチまで緑線をトレース
     while(Touch() == 0) {
         // 左センサーが緑検知したら左Speed=(-20)
@@ -394,14 +408,14 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
     STOP_MOTOR();
 
 
-    /* ---------------- 赤線まで直進 ---------------- */
+    /* ---------------- 11. 赤線まで直進 ---------------- */
     // 赤線を検知するまで直進
     while(GetColor(EV3_PORT_1) != 5 && GetColor(EV3_PORT_2) != 5) {
         DSU_MOTOR(-30);
@@ -412,7 +426,7 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -85) {
-        TURN_MOTOR(30, -30);
+        TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
@@ -422,7 +436,7 @@ void main_task(intptr_t unused){
     GoToWall();
 
 
-    /* ---------------- 黒線まで赤線トレース ---------------- */
+    /* ---------------- 12. 黒線まで赤線トレース ---------------- */
     // 黒線を検知するまで赤線をトレース
     while(GetColor(EV3_PORT_1) != 1 && GetColor(EV3_PORT_2) != 1) {
         // 左センサーが赤検知したら左Speed=(-20)
@@ -447,14 +461,14 @@ void main_task(intptr_t unused){
     
     // 右に90度回転
     while(GyroAngle() < 85) {
-        TURN_MOTOR(-30, 30);
+        TURN_MOTOR(-30, 30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
     // モーターストップ
     STOP_MOTOR();
 
 
-    /* ---------------- 黒線トレース ---------------- */
+    /* ---------------- 13. 黒線トレース ---------------- */
     // 壁タッチまで黒線をトレース
     while(Touch() == 0) {
         // 左センサーが黒検知したら左Speed=(-20)
