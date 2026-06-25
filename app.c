@@ -72,6 +72,11 @@ void GoToWall() {   // 壁に向かって後進する関数
     GyroReset();        // ジャイロリセット
 }
 
+void BackFormWall(int power, int time) {   // 壁にぶつかった後にバックする
+    tslp_tsk(300);
+    DS_MOTOR(power, time)
+}
+
 int GyroAngle() {   // ジャイロセンサーの角度取得関数
     return ev3_gyro_sensor_get_angle(EV3_PORT_4);
 }
@@ -88,16 +93,6 @@ void SOUND(int freq, int time) {    // 音を鳴らす関数
     ev3_speaker_play_tone(freq, time);
 }
 
-// PCモニタリング用の関数（センサーやジャイロの値をターミナルに出力する）
-void MonitorStatus(const char* state_name) {
-    int left_color = GetColor(EV3_PORT_1);
-    int right_color = GetColor(EV3_PORT_2);
-    int gyro = GyroAngle();
-    int touch = Touch();
-    // PCのシリアル接続画面に、状態を表示する（\rで同じ行を上書きするように出力します）
-    printf("[%s] L-Color:%d | R-Color:%d | Gyro:%d | Touch:%d\r\n", 
-            state_name, left_color, right_color, gyro, touch);
-}
 
 /* ---------------- メインプログラム ---------------- */
 void main_task(intptr_t unused){
@@ -145,15 +140,13 @@ void main_task(intptr_t unused){
         }
     }
     // 壁にタッチしたら少し下がる
-    DS_MOTOR(30, 600);
+    BackFormWall(30, 600);
 
     // 左に90度回転
     while(GyroAngle() > -83) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
-
-    tslp_tsk(300);
 
     // モーターストップ
     STOP_MOTOR();
@@ -188,15 +181,13 @@ void main_task(intptr_t unused){
     tslp_tsk(300);
 
     // 壁にタッチしたら少し下がる
-    DS_MOTOR(30, 600);
+    BackFormWall(30, 600);
 
     // 左に90度回転
     while(GyroAngle() > -83) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
-
-    tslp_tsk(300);
 
     // モーターストップ
     STOP_MOTOR();
