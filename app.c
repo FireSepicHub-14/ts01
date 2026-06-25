@@ -146,7 +146,7 @@ void main_task(intptr_t unused){
 
     // ジャイロリセット
     GyroReset();
-    tslp_tsk(30)
+    tslp_tsk(30);
 
 
     /* ---------------- 2. 黄線トレース ---------------- */
