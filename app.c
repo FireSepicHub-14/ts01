@@ -144,12 +144,14 @@ void main_task(intptr_t unused){
 
     /* ---------------- 0. スタート ---------------- */
     // スタートし、ジャイロリセット
+    MonitorLCD("Start");
     GyroReset();
 
 
     /* ---------------- 1. 黒線トレース ---------------- */
     //壁タッチまで黒線をトレース
     while(Touch() == 0) {
+        MonitorLCD("1. Black Trace"); // LCD画面を更新
         // 左センサーが黒検知したら左Speed=(-20)
         if (GetColor(EV3_PORT_1) == 1) {
             L_MOTOR(-20);
@@ -172,6 +174,7 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -83) {
+        MonitorLCD("1. Turn Left"); // LCD画面を更新
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
@@ -188,6 +191,7 @@ void main_task(intptr_t unused){
     /* ---------------- 2. 黄線トレース ---------------- */
     // 壁タッチまで黄線をトレース
     while(Touch() == 0) {
+        MonitorLCD("2. Yellow Trace"); // LCD画面を更新
         // 左センサーが黄検知したら左Speed=(-20)
         if (GetColor(EV3_PORT_1) == 4) {
             L_MOTOR(-20);
@@ -211,6 +215,7 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -83) {
+        MonitorLCD("2. Turn Left"); // LCD画面を更新
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
@@ -229,6 +234,7 @@ void main_task(intptr_t unused){
     /* ---------------- 3. 緑線まで直進 ---------------- */
     // 緑線を検知するまで直進
     while(GetColor(EV3_PORT_1) != 3 && GetColor(EV3_PORT_2) != 3) {
+        MonitorLCD("3. Go Green"); // LCD画面を更新
         DSU_MOTOR(-30);
         tslp_tsk(10);
     }
@@ -237,6 +243,7 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -85) {
+        MonitorLCD("3. Turn Left"); // LCD画面を更新
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
@@ -250,6 +257,7 @@ void main_task(intptr_t unused){
     /* ---------------- 4. 緑線トレース ---------------- */
     // 壁タッチまで緑線をトレース
     while(Touch() == 0) {
+        MonitorLCD("4. Green Trace"); // LCD画面を更新
         // 左センサーが緑検知したら左Speed=(-20)
         if (GetColor(EV3_PORT_1) == 3) {
             L_MOTOR(-20);
@@ -272,6 +280,7 @@ void main_task(intptr_t unused){
 
     // 左に90度回転
     while(GyroAngle() > -87) {
+        MonitorLCD("4. Turn Left"); // LCD画面を更新
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
