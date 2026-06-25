@@ -173,7 +173,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(30, 300);
 
     // 左に90度回転
-    while(GyroAngle() > -83) {
+    while(GyroAngle() > -166) {
         TURN_MOTOR(20, -20);    // 右と左が反対の数値の可能性
         tslp_tsk(10);
     }
