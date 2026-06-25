@@ -73,8 +73,10 @@ void GoToWall() {   // 壁に向かって後進する関数
 }
 
 void BackFormWall(int power, int time) {   // 壁にぶつかった後にバックする
+    STOP_MOTOR();
     tslp_tsk(300);
     DS_MOTOR(power, time)
+    STOP_MOTOR();
 }
 
 int GyroAngle() {   // ジャイロセンサーの角度取得関数
@@ -93,6 +95,32 @@ void SOUND(int freq, int time) {    // 音を鳴らす関数
     ev3_speaker_play_tone(freq, time);
 }
 
+// EV3のLCD液晶画面に状態をリアルタイム表示する関数
+void MonitorLCD(const char* state_name) {
+    char buf[100];
+    int left_color = GetColor(EV3_PORT_1);
+    int right_color = GetColor(EV3_PORT_2);
+    int gyro = GyroAngle();
+    int touch = Touch();
+
+    // 画面クリア
+    ev3_lcd_fill_rect(0, 0, 178, 128, EV3_LCD_WHITE);
+
+    // フォント設定して各情報を描画
+    ev3_lcd_set_font(EV3_FONT_MEDIUM);
+    
+    sprintf(buf, "ST: %s", state_name);
+    ev3_lcd_draw_string(buf, 10, 10);
+
+    sprintf(buf, "Gyro: %d deg", gyro);
+    ev3_lcd_draw_string(buf, 10, 35);
+
+    sprintf(buf, "L-Col: %d | R-Col: %d", left_color, right_color);
+    ev3_lcd_draw_string(buf, 10, 60);
+
+    sprintf(buf, "Touch: %s", touch ? "ON" : "OFF");
+    ev3_lcd_draw_string(buf, 10, 85);
+}
 
 /* ---------------- メインプログラム ---------------- */
 void main_task(intptr_t unused){
@@ -177,8 +205,6 @@ void main_task(intptr_t unused){
             R_MOTOR(-30);
         }
     }
-
-    tslp_tsk(300);
 
     // 壁にタッチしたら少し下がる
     BackFormWall(30, 600);
