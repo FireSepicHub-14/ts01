@@ -178,7 +178,7 @@ void main_task(intptr_t unused){
     BackFormWall(30, 600);
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         MonitorLCD("1. Turn Left"); // LCD画面を更新
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
@@ -217,7 +217,7 @@ void main_task(intptr_t unused){
     BackFormWall(30, 600);
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         MonitorLCD("2. Turn Left"); // LCD画面を更新
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
@@ -243,7 +243,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(50, 10);
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         MonitorLCD("3. Turn Left"); // LCD画面を更新
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
@@ -283,7 +283,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(30, 600);
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         MonitorLCD("4. Turn Left"); // LCD画面を更新
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
@@ -305,7 +305,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(30, 600);
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
     }
@@ -343,7 +343,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(50, 30);   // いらないかも？
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
     }
@@ -381,7 +381,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(50, 30);   // いらないかも？
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
     }
@@ -416,7 +416,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(30, 600);
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
     }
@@ -440,7 +440,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(50, 30);   // いらないかも？
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
     }
@@ -478,7 +478,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(30, 600);
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
     }
@@ -499,7 +499,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(50, 30);
 
     // 左に90度回転
-    while(GyroAngle() > -90) {
+    while(GyroAngle() > -88) {
         TURN_MOTOR(30, -30);    // 右と左が反対の数値の可能性
         slp(10);
     }
@@ -537,7 +537,7 @@ void main_task(intptr_t unused){
     DS_MOTOR(50, 30);
     
     // 右に90度回転
-    while(GyroAngle() < 90) {
+    while(GyroAngle() < 92) {
         TURN_MOTOR(-30, 30);    // 右と左が反対の数値の可能性
         slp(10);
     }
